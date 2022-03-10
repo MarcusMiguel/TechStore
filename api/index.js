@@ -1,0 +1,30 @@
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const productsRoute = require("./routes/product");
+const authRoute = require("./routes/auth");
+const cartRoute = require("./routes/cart");
+const stripeRoute = require("./routes/stripe");
+const cors = require("cors");
+
+dotenv.config();
+
+mongoose    
+    .connect(process.env.MONGO_URL)
+    .then(() => console.log("Sucessfull conection!"))
+    .catch((err) => {
+    console.log(err);
+    })
+
+app.use(cors());
+app.use(express.json());
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/products", productRoute);
+app.use("/api/carts", cartRoute);
+app.use("/api/stripe", stripeRoute);
+
+app.listen(process.env.PORT, () => {
+    console.log("API is running...")
+})
