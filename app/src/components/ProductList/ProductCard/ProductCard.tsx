@@ -1,18 +1,26 @@
 import * as React from 'react';
 import { IconButton } from '@mui/material';
-import { Product } from '@chec/commerce.js/types/product';
 import { StyledCardContent, StyledCard, StyledCardActions, StyledMedia, StyledModalTitle, StyledModal, StyledAddShoppingCart, StyledInfo, StyledClose, StyledModalBox, StyledProductName, StyledProductPrice, StyledCardRow, StyledProductDescription } from './style';
+import { addProduct, removeProduct, emptyCart } from "../../../redux/slices/cartSlice"
+import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 
-interface ProductProps {
-    product: Product,
-    onAddToCart: Function
+interface ProductCardProps {
+    product?: {
+        _id: string,
+        title: string,
+        desc: string,
+        img: string,
+        price: number,
+    },
 };
 
-export const ProductCard = ({ product, onAddToCart }: ProductProps) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    const dispatch = useAppDispatch();
 
     if (product == undefined) {
         return <></>
@@ -20,21 +28,21 @@ export const ProductCard = ({ product, onAddToCart }: ProductProps) => {
 
     return (
         <StyledCard>
-            <StyledMedia image={product.assets[0].url} title={product.name} />
+            <StyledMedia image={product.img} title={product.title} />
             <StyledCardContent>
                 <StyledProductName>
-                    {product.name}
+                    {product.title}
                 </StyledProductName>
             </StyledCardContent>
             <StyledCardRow>
                 <StyledProductPrice>
-                    ${product.price.formatted}
+                    ${product.price.toFixed(2)}
                 </StyledProductPrice>
                 <StyledCardActions>
                     <IconButton onClick={handleOpen} aria-label="Open modal" >
                         <StyledInfo />
                     </IconButton>
-                    <IconButton aria-label="Add to Cart" onClick={() => onAddToCart(product.id, 1)} >
+                    <IconButton aria-label="Add to Cart" onClick={() => dispatch(addProduct(product))} >
                         <StyledAddShoppingCart />
                     </IconButton>
                 </StyledCardActions>
@@ -46,11 +54,11 @@ export const ProductCard = ({ product, onAddToCart }: ProductProps) => {
                             <StyledClose />
                         </IconButton>
                     </StyledModalTitle>
-                    <StyledProductDescription id="modal-modal-description" paragraph dangerouslySetInnerHTML={{ __html: product.description }} color="textSecondary">
+                    <StyledProductDescription id="modal-modal-description" paragraph dangerouslySetInnerHTML={{ __html: product.desc }} color="textSecondary">
                     </StyledProductDescription>
                 </StyledModalBox>
             </StyledModal>
-        </StyledCard>
+        </StyledCard >
     )
 };
 

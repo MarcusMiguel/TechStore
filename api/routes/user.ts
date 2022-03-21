@@ -1,18 +1,19 @@
-const User = require("../models/User");
-
-const {
+import User from "../models/User";
+import CryptoJS from "crypto-js";
+import {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
-} = require("./verifyToken");
+} from "./verify";
 
 const router = require("express").Router();
+const password_secret_key = process.env.PASSWORD_SECRET_KEY;
 
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
-      process.env.PASS_SEC
+      password_secret_key
     ).toString();
   }
 
@@ -86,4 +87,4 @@ router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

@@ -1,56 +1,50 @@
 import React, { useState, useEffect, FC } from 'react';
-import { commerce } from './lib/commerce';
-import { Product } from '@chec/commerce.js/types/product';
-import { Cart } from '@chec/commerce.js/types/cart';
+// import { commerce } from './lib/commerce';
+// import { Cart } from '@chec/commerce.js/types/cart';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Navbar, Products, CartComponent } from './components';
 import GlobalStyle from './globalStyles';
+import axios from "axios";
+import { useAppDispatch } from './redux/hooks/hooks';
+import { setProducts } from './redux/slices/productsSlice';
+
+import { Navbar, ProductList, Cart } from './components';
+import { Home, CartPage, Success, SignIn, SignUp } from './pages';
+import { setCart } from './redux/slices/cartSlice';
+import Login from './pages/SignIn/SignIn';
 
 const App: FC = () => {
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [cart, setCart] = useState<Cart>();
+  const dispatch = useAppDispatch();
 
   const fetchProducts = async () => {
-    const { data } = await commerce.products.list();
-    setProducts(data);
+    try {
+      const res = await axios.get(
+        "http://localhost:5000/api/product"
+      );
+      dispatch(setProducts(res.data));
+    } catch (err) { }
   }
 
   const fetchCart = async () => {
-    setCart(await commerce.cart.retrieve());
+    // dispatch(setCart({ products: [], total: 0 }));
   }
 
   useEffect(() => {
-    fetchProducts();
     fetchCart();
-    console.log(products)
+    fetchProducts();
   }, [])
-
-  const handleAddToCart = async (productId, quantity) => {
-    const { cart } = await commerce.cart.add(productId, quantity);
-    setCart(cart);
-  }
-
-  const handleItemUpdate = async (productId, quantity) => {
-    const { cart } = await commerce.cart.update(productId, { quantity });
-    setCart(cart);
-  }
-
-  const handleEmptyCart = async () => {
-    const { cart } = await commerce.cart.empty();
-    setCart(cart);
-  }
 
   return (
     <Router>
-      <div>
-        <GlobalStyle />
-        <Navbar totalItems={cart?.total_items} />
-        <Routes>
-          <Route path="/" element={<Products products={products} onAddToCart={handleAddToCart} />} />
-          <Route path="/cart" element={<CartComponent cart={cart} emptyCart={handleEmptyCart} updateItem={handleItemUpdate} />} />
-        </Routes>
-      </div>
+      <GlobalStyle />
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/success" element={<Success />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Routes>
     </Router>
   )
 };

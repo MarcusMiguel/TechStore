@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Badge } from '@mui/material';
+import { AppBar, Toolbar } from '@mui/material';
 import styled from 'styled-components';
 import { ShoppingCart } from '@mui/icons-material';
 import { Link } from "react-router-dom";
@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export const StyledAppBar = styled(AppBar)`
     width: 100%;
     height: 11vh;
+    padding-left: 1%;
+    padding-right: 3.5%;
 `;
 
 export const StyledContainer = styled.div`

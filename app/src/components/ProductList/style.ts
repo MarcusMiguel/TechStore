@@ -4,8 +4,9 @@ import { Box } from '@mui/material';
 export const StyledMain = styled.main`
     display: flex;
     justify-content: center;
-    padding-left: 20px;
-    padding-right: 10px;
+    padding-left: 40px;
+    padding-right: 36px;
+    width: '100%'
 
     @media(max-width: 950px) {
         margin-top: 80px;
