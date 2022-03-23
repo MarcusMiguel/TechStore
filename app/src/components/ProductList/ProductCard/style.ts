@@ -4,10 +4,13 @@ import { AddShoppingCart, Info, Close } from '@mui/icons-material';
 
 export const StyledCard = styled(Card)`
     width: auto;
+    border-radius: 20px !important;
+
 `;
 
 export const StyledMedia = styled(CardMedia)`
     height: 30vh;
+
 ` ;
 
 export const StyledCardContent = styled(CardContent)`
@@ -67,6 +70,7 @@ export const StyledModalBox = styled(Box)`
     p: 4;
     padding: 40px;
     background: white;
+    border-radius: 20px;
 `;
 
 export const StyledProductName = styled(Typography)`

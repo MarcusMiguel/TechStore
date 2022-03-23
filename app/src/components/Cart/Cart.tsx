@@ -118,8 +118,8 @@ const Cart = () => {
 
     return (
         <>
-            <div style={{ padding: '0px 0px 30px 0px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', height: '12vh' }}>
+            <div style={{ padding: '0px 70px 0px 0px', }}>
+                <div style={{ display: 'flex', alignItems: 'center', height: '12vh', padding: '0px 0px 0px 0px' }}>
                     <Typography sx={{ width: '100%', fontSize: '30px', fontWeight: 900, padding: '0px 20px 0px 20px', marginBottom: 1 }}>
                         Shopping Cart
                     </Typography>

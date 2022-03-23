@@ -1,22 +1,25 @@
 import { AppBar, Toolbar } from '@mui/material';
 import styled from 'styled-components';
-import { ShoppingCart } from '@mui/icons-material';
+import { ShoppingCart, Logout } from '@mui/icons-material';
 import { Link } from "react-router-dom";
 
 export const StyledAppBar = styled(AppBar)`
     width: 100%;
     height: 11vh;
-    padding-left: 1%;
-    padding-right: 3.5%;
+    padding-left: 0.6%;
+    padding-right: 8.7%;
+    display: flex;
 `;
 
 export const StyledContainer = styled.div`
     height: 10% !important;
     margin-bottom: 8%;
+    flex-direction: 'row';
 `;
 
 export const StyledToolbar = styled(Toolbar)`
     height: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 `;

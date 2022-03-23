@@ -1,4 +1,5 @@
-const Cart = require("../models/Cart");
+import Cart from "../models/Cart";
+
 const {
     verifyToken,
     verifyTokenAndAuthorization,
@@ -18,10 +19,11 @@ router.post("/", verifyToken, async (req, res) => {
     }
 });
 
-router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
+router.put("/", verifyTokenAndAuthorization, async (req, res) => {
     try {
+        console.log(req.body)
         const updatedCart = await Cart.findByIdAndUpdate(
-            req.params.id,
+            req.body,
             {
                 $set: req.body,
             },
@@ -42,7 +44,7 @@ router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
     }
 });
 
-router.get("/find/:userId", verifyTokenAndAuthorization, async (req, res) => {
+router.get("/:userId", verifyTokenAndAuthorization, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId: req.params.userId });
         res.status(200).json(cart);

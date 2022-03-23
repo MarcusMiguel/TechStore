@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styled from "styled-components";
-// import { login } from "../redux/apiCalls";
-// import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { loginSuccess } from "../../redux/slices/userSlice";
 
 const Container = styled.div`
   width: 100vw;
@@ -15,7 +16,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 20vw;
+width: 25vw;
   padding: 20px;
   background-color: white;
   margin-bottom: 10vh;
@@ -63,40 +64,60 @@ const Link = styled.div`
 
 const Error = styled.span`
   color: red;
+  font-size: 18px;
 `;
 
 const SignInForm = () => {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    // const { isFetching, error } = useSelector((state) => state.user);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const { currentUser } = useAppSelector((state) => state.user);
+  const [localError, setLocalError] = useState(false);
+  const [fetching, setFetching] = useState(false);
 
-    const handleClick = (e) => {
-        e.preventDefault();
-    };
-    return (
-        <Container>
-            <Wrapper>
-                <Title>SIGN IN</Title>
-                <Form>
-                    <Input
-                        placeholder="username"
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <Input
-                        placeholder="password"
-                        type="password"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button onClick={handleClick} >
-                        LOGIN
-                    </Button>
-                    <Link onClick={() => navigate('/signup')}>SIGN UP</Link>
-                </Form>
-            </Wrapper>
-        </Container>
-    );
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    login({ username, password });
+  };
+
+  const login = async (user) => {
+    setFetching(true);
+    try {
+      const res = await axios.post("http://localhost:5000/api/auth/login", user);
+      dispatch(loginSuccess(res.data));
+      navigate('/');
+    } catch (err) {
+      setFetching(false);
+      setLocalError(true);
+    }
+  };
+
+  return (
+    <Container>
+      <Wrapper>
+        <Title>SIGN IN</Title>
+        <Form>
+          {localError && <Error>Invalid username or password.</Error>}
+          <Input
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleClick} disabled={fetching} >
+            LOGIN
+          </Button>
+          <Link onClick={() => navigate('/signup')}>SIGN UP</Link>
+        </Form>
+      </Wrapper>
+    </Container >
+  );
 };
 
 export default SignInForm;
+

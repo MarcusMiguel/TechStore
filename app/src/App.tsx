@@ -1,49 +1,36 @@
 import React, { useState, useEffect, FC } from 'react';
-// import { commerce } from './lib/commerce';
-// import { Cart } from '@chec/commerce.js/types/cart';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GlobalStyle from './globalStyles';
 import axios from "axios";
-import { useAppDispatch } from './redux/hooks/hooks';
-import { setProducts } from './redux/slices/productsSlice';
+import { useAppDispatch, useAppSelector } from './redux/hooks/hooks';
+import { fetchProducts, setProducts } from './redux/slices/productsSlice';
+import { useNavigate, Navigate } from 'react-router-dom';
 
 import { Navbar, ProductList, Cart } from './components';
 import { Home, CartPage, Success, SignIn, SignUp } from './pages';
-import { setCart } from './redux/slices/cartSlice';
-import Login from './pages/SignIn/SignIn';
+import { fetchCart, setCart } from './redux/slices/cartSlice';
 
 const App: FC = () => {
 
   const dispatch = useAppDispatch();
-
-  const fetchProducts = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:5000/api/product"
-      );
-      dispatch(setProducts(res.data));
-    } catch (err) { }
-  }
-
-  const fetchCart = async () => {
-    // dispatch(setCart({ products: [], total: 0 }));
-  }
+  const { currentUser } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    fetchCart();
+    console.log(currentUser)
+    currentUser && dispatch(fetchCart({ currentUser }));
     fetchProducts();
-  }, [])
+  }, [currentUser])
 
   return (
     <Router>
       <GlobalStyle />
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/success" element={<Success />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/" element={currentUser ? <Home /> : <Navigate to="signin" />} />
+        <Route path="/cart" element={currentUser ? <CartPage /> : <Navigate to="signin" />} />
+        <Route path="/success" element={currentUser ? <Success /> : <Navigate to="signin" />} />
+        <Route path="/signin" element={currentUser ? <Navigate to="/" /> : <SignIn />} />
+        <Route path="/signup" element={currentUser ? <Navigate to="/" /> : <SignUp />} />
       </Routes>
     </Router>
   )

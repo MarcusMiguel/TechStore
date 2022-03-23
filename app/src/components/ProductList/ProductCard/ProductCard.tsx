@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IconButton } from '@mui/material';
 import { StyledCardContent, StyledCard, StyledCardActions, StyledMedia, StyledModalTitle, StyledModal, StyledAddShoppingCart, StyledInfo, StyledClose, StyledModalBox, StyledProductName, StyledProductPrice, StyledCardRow, StyledProductDescription } from './style';
-import { addProduct, removeProduct, emptyCart } from "../../../redux/slices/cartSlice"
+import { addProduct, removeProduct, emptyCart, addProductTeste } from "../../../redux/slices/cartSlice"
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks/hooks';
 
 interface ProductCardProps {
@@ -19,6 +19,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const [open, setOpen] = React.useState<boolean>(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const { currentUser } = useAppSelector((state) => state.user);
 
     const dispatch = useAppDispatch();
 
@@ -42,7 +43,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     <IconButton onClick={handleOpen} aria-label="Open modal" >
                         <StyledInfo />
                     </IconButton>
-                    <IconButton aria-label="Add to Cart" onClick={() => dispatch(addProduct(product))} >
+                    <IconButton aria-label="Add to Cart" onClick={() => dispatch(addProductTeste({ currentUser, product }))} >
                         <StyledAddShoppingCart />
                     </IconButton>
                 </StyledCardActions>
