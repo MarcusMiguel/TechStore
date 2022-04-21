@@ -5,73 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { loginSuccess } from "../../redux/slices/userSlice";
-
-const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Wrapper = styled.div`
-width: 25vw;
-  padding: 20px;
-  background-color: white;
-  margin-bottom: 10vh;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 300;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-  height: 6vh;
-`;
-
-const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin-bottom: 10px;
-  &:disabled {
-    color: green;
-    cursor: not-allowed;
-  }
-`;
-
-const Link = styled.div`
-  font-size: 20px;
-  text-decoration: underline;
-  cursor: pointer;
-  width: 100%;
-  margin-left: 68%;
-`;
-
-const Error = styled.span`
-  color: red;
-  font-size: 18px;
-`;
+import { Container, Form, Title, Wrapper, Error, Button, Link, Input } from "./style";
 
 const SignInForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { currentUser } = useAppSelector((state) => state.user);
-  const [localError, setLocalError] = useState(false);
+
+  const [formValues, setFormValues] = useState({ username: "", email: "", password: "" });
+  const [formErrors, setFormErrors] = useState({ username: "", email: "", password: "", serverError: "" });
   const [fetching, setFetching] = useState(false);
 
   const dispatch = useAppDispatch();
@@ -79,8 +18,36 @@ const SignInForm = () => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    login({ username, password });
+    validate(formValues);
   };
+
+  const handleChange = (e) => {
+    const { placeholder, value } = e.target;
+    setFormValues({ ...formValues, [placeholder]: value });
+  };
+
+  const validate = (values) => {
+    const errors = { username: "", email: "", password: "", confirmPassword: "", serverError: "" };
+
+    var error = false;
+    if (!values.username) {
+      errors.username = "Username is required.";
+      error = true;
+    }
+
+    if (!values.password) {
+      errors.password = "Password is required.";
+      error = true;
+    }
+
+    if (!error) {
+      login({ username: formValues.username, password: formValues.password });
+    }
+
+    setFormErrors(errors);
+
+    return errors;
+  }
 
   const login = async (user) => {
     setFetching(true);
@@ -89,8 +56,10 @@ const SignInForm = () => {
       dispatch(loginSuccess(res.data));
       navigate('/');
     } catch (err) {
+      //@ts-ignore
+      const msg: string = err.response.data.message
+      setFormErrors({ username: "", email: "", password: "", serverError: msg });
       setFetching(false);
-      setLocalError(true);
     }
   };
 
@@ -99,15 +68,17 @@ const SignInForm = () => {
       <Wrapper>
         <Title>SIGN IN</Title>
         <Form>
-          {localError && <Error>Invalid username or password.</Error>}
+          <Error>{formErrors.serverError}</Error>
+          <Error>{formErrors.username}</Error>
           <Input
             placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleChange}
           />
+          <Error>{formErrors.password}</Error>
           <Input
             placeholder="password"
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
           />
           <Button onClick={handleClick} disabled={fetching} >
             LOGIN

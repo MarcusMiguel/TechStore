@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { useAppSelector } from "../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useNavigate } from 'react-router-dom';
+import { emptyCartAsync } from "../../redux/slices/cartSlice";
 
 interface CurrentLocationState {
     state: {
@@ -21,8 +22,8 @@ interface CurrentLocationState {
 const Success = () => {
     const { state } = useLocation();
     const currentUser = useAppSelector((state) => state.user.currentUser);
-    const [orderId, setOrderId] = useState(null);
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const createOrder = async () => {
@@ -31,7 +32,7 @@ const Success = () => {
                     state: state,
                     userId: currentUser?._id,
                 });
-                setOrderId(res.data._id);
+                dispatch(emptyCartAsync({ currentUser }));
             } catch { }
         };
         state && createOrder();
@@ -47,9 +48,8 @@ const Success = () => {
                 justifyContent: "center",
             }}
         >
-            {orderId
-                ? `Order has been created successfully. Your order number is ${orderId}`
-                : `Successfull. Your order is being prepared...`}
+            {
+                `Successfull. Your order is being prepared...`}
             <button onClick={() => navigate('/')} style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
         </div>
     );

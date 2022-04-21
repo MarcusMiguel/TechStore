@@ -1,11 +1,12 @@
 import React from 'react';
 import { Toolbar, IconButton, Badge, Typography } from '@mui/material';
-import { StyledAppBar, StyledContainer, StyledToolbar, StyledShoppingCart, StyledLink } from './style';
+import { StyledAppBar, StyledContainer, StyledShoppingCart, StyledLink, StyledActions, StyledToolbar, StyledImg, StyledLogout } from './style';
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
 import { ShoppingCart, Logout } from '@mui/icons-material';
 import { logout } from '../../redux/slices/userSlice';
+import { emptyCartAsync } from '../../redux/slices/cartSlice';
 
 const Navbar = () => {
 
@@ -14,12 +15,14 @@ const Navbar = () => {
     const pathname = location.pathname;
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const currentUser = useAppSelector((state) => state.user.currentUser);
 
     const toRender = () => {
         return location.pathname == '/signin' ? false : location.pathname == '/signup' ? false : true
     }
 
     const handleLogout = () => {
+        dispatch(emptyCartAsync({ currentUser }));
         dispatch(logout());
         navigate('/signin');
     }
@@ -29,10 +32,8 @@ const Navbar = () => {
             < StyledContainer >
                 <StyledAppBar color="inherit" >
                     <StyledToolbar>
-                        <StyledLink to='/'>
-                            <img src={logo} alt='ecommerce' height='100%' />
-                        </StyledLink>
-                        <div style={{ width: '13.5vw', marginRight: '-4%' }}>
+                        <StyledImg onClick={() => navigate('/')} src={logo} alt='ecommerce'></StyledImg>
+                        <StyledActions>
                             {pathname != '/cart' && (
                                 <IconButton href='/cart' aria-label='Show cart items' color='inherit' >
                                     <Badge badgeContent={cart?.products.reduce((acc, obj) => { return acc + obj.quantity }, 0)} color='error'>
@@ -40,11 +41,10 @@ const Navbar = () => {
                                     </Badge>
                                 </IconButton>
                             )}
-                            <IconButton style={{ marginLeft: '15%' }} onClick={() => handleLogout()} aria-label='Logout' color='inherit' >
-                                <Logout />
+                            <IconButton onClick={() => handleLogout()} aria-label='Logout' color='inherit' >
+                                <StyledLogout />
                             </IconButton>
-                        </div>
-
+                        </StyledActions>
                     </StyledToolbar>
                 </StyledAppBar>
             </ StyledContainer >

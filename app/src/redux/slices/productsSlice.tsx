@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
+import { RootState } from "..";
 
 interface Product {
     _id: string,
@@ -17,11 +18,13 @@ const initialState: ProductsState = {
     products: [],
 };
 
-export const fetchProducts = createAsyncThunk('fetchProducts', async () => {
+export const loadProducts = createAsyncThunk('loadProducts', async (data, thunkAPI) => {
     const res = await axios.get(
         "http://localhost:5000/api/product",
     );
-    return res.data;
+
+    const state = thunkAPI.getState() as RootState;
+    thunkAPI.dispatch(setProducts(res.data))
 })
 
 const productsSlice = createSlice({
@@ -31,11 +34,6 @@ const productsSlice = createSlice({
         setProducts: (state, action: PayloadAction<Product[] | null>) => {
             state.products = action.payload;
         },
-    },
-    extraReducers: (builder) => {
-        builder.addCase(fetchProducts.fulfilled, (state, action) => {
-            state.products = action.payload;
-        })
     },
 })
 

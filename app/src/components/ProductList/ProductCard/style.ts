@@ -5,23 +5,23 @@ import { AddShoppingCart, Info, Close } from '@mui/icons-material';
 export const StyledCard = styled(Card)`
     width: auto;
     border-radius: 20px !important;
-
+    padding-top: 20px;
+    border-width: 200px !important;
 `;
 
 export const StyledMedia = styled(CardMedia)`
     height: 30vh;
-
+    width: auto;
+    background-size: contain !important;
 ` ;
 
 export const StyledCardContent = styled(CardContent)`
     height: 10vh;
-    margin-bottom: 10px;
 `;
 
 export const StyledCardActions = styled.div`
     display: flex;
     align-items: center;
-
 `;
 
 export const StyledCardRow = styled.div`
@@ -74,16 +74,25 @@ export const StyledModalBox = styled(Box)`
 `;
 
 export const StyledProductName = styled(Typography)`
-    font-size: 3vh !important;
-    font-weight: 600 !important;
+    font-size: 2.8vh !important;
+    font-weight: 500 !important;
     text-align: justify;
+
+    @media(max-width: 750px) {
+        font-size: 2.1vh !important;
+    }
 `;
 
 export const StyledProductPrice = styled(Typography)`
     font-size: 3.5vh !important;
+    font-weight: 600 !important;
 `;
 
 export const StyledProductDescription = styled(Typography)`
     margin-top: 20px;
     font-size: 3vh !important;
+    
+    @media(max-width: 825px) {
+        font-size: 2vh !important;
+    }
 `;

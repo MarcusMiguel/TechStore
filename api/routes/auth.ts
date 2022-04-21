@@ -17,23 +17,45 @@ router.post("/register", async (req, res) => {
     ).toString(),
   });
 
+  const users = await User.find();
+  console.log(users)
+
   try {
-    const savedUser = newUser.save();
+    const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
-    res.status(500).json(err);
+
+    const username = await User.findOne({
+      username: req.body.username
+    });
+    const email = await User.findOne({
+      email: req.body.email
+    });
+
+    if (username) {
+      res.status(500).send({ message: "Username is aready is use." })
+    }
+    else if (email) {
+      res.status(500).send({ message: "Email is aready is use." })
+    }
+    else {
+      res.status(500).send({ message: "Error creating user." })
+    }
   }
+
 });
 
 router.post('/login', async (req, res) => {
   try {
+    const users = await User.find();
+    console.log(users)
+
     const user = await User.findOne(
       {
-        userName: req.body.username
+        username: req.body.username
       }
     );
-
-    !user && res.status(401).json("Wrong Password or UserName");
+    !user && res.status(401).send({ message: "Wrong Username or Password." });
 
     const hashedPassword = CryptoJS.AES.decrypt(
       user.password,
@@ -45,7 +67,7 @@ router.post('/login', async (req, res) => {
     const inputPassword = req.body.password;
 
     originalPassword != inputPassword &&
-      res.status(401).json("Wrong Password or UserName");
+      res.status(401).send({ message: "Wrong Username or Password." });
 
     const accessToken = jwt.sign(
       {
@@ -53,14 +75,14 @@ router.post('/login', async (req, res) => {
         isAdmin: user.isAdmin,
       },
       jwt_secret_key,
-      { expiresIn: "3d" }
+      { expiresIn: "10h" }
     );
 
     const { password, ...others } = user._doc;
     res.status(200).json({ ...others, accessToken });
 
   } catch (err) {
-    res.status(500).json(err);
+    res.status(500).send({ message: "Wrong Username or Password." });
   }
 
 });

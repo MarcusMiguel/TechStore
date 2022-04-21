@@ -10,7 +10,7 @@ const router = require("express").Router();
 
 router.post("/", verifyToken, async (req, res) => {
     const newCart = new Cart(req.body);
-
+    console.log(req.body)
     try {
         const savedCart = await newCart.save();
         res.status(200).json(savedCart);
@@ -21,14 +21,11 @@ router.post("/", verifyToken, async (req, res) => {
 
 router.put("/", verifyTokenAndAuthorization, async (req, res) => {
     try {
-        console.log(req.body)
         const updatedCart = await Cart.findByIdAndUpdate(
-            req.body,
-            {
-                $set: req.body,
-            },
-            { new: true }
+            req.body._id,
+            req.body
         );
+
         res.status(200).json(updatedCart);
     } catch (err) {
         res.status(500).json(err);
