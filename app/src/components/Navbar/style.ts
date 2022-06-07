@@ -3,25 +3,34 @@ import styled from 'styled-components';
 import { ShoppingCart, Logout } from '@mui/icons-material';
 
 export const StyledAppBar = styled(AppBar)`
-    padding-right: 6vw;
-    padding-left: 1vw;
+    padding-right: 82px;
+    padding-left: 16px;
     width: 100%;
     height: 12vh;
     display: flex;
+
+    @media(min-width: 300px) and (max-width: 599px) {
+        padding-left: 25px; 
+        padding-right: 75px;
+   }
+
+    @media(max-width: 299px) {
+        padding: 0; 
+   }
 `;
 
 export const StyledContainer = styled.div`
     width: 100%;
-    margin-bottom: 15vh;
+    margin-bottom: 18vh;
 `;
 
 export const StyledToolbar = styled(Toolbar)`
     height: 100%;
     width: 100%;
     justify-content: space-between;
-    @media(max-width: 825px) {
-        justify-content: start;
-    }
+    @media(max-width: 300px) {
+        padding: 0 !important;
+   }
 `;
 
 export const StyledShoppingCart = styled(ShoppingCart)`
@@ -31,7 +40,8 @@ export const StyledShoppingCart = styled(ShoppingCart)`
 
 export const StyledLogout = styled(Logout)`
     margin-bottom: -5px;
-    font-size: 6vh !important;
+    margin-left: 20px;
+    font-size: 6.5vh !important;
 `;
 
 export const StyledLink = styled.div`
@@ -44,13 +54,10 @@ export const StyledImg = styled.img`
 `;
 
 export const StyledActions = styled.div`
-    justify-content: space-between;
+    justify-content: end;
     display: flex;
-    flex-direction: "row";
-     width: 10vw;
 
     @media(max-width: 825px) {
          width: 30vw;
-        padding-right: 30px;
     }
 `;

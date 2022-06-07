@@ -5,7 +5,7 @@ import { AddShoppingCart, Info, Close } from '@mui/icons-material';
 export const StyledCard = styled(Card)`
     width: auto;
     border-radius: 20px !important;
-    padding-top: 20px;
+    padding: 20px 10px 0px 10px;
     border-width: 200px !important;
 `;
 
@@ -89,7 +89,7 @@ export const StyledProductPrice = styled(Typography)`
 `;
 
 export const StyledProductDescription = styled(Typography)`
-    margin-top: 20px;
+    margin-top: 20px !important;
     font-size: 3vh !important;
     
     @media(max-width: 825px) {

@@ -4,9 +4,8 @@ import { StyledAppBar, StyledContainer, StyledShoppingCart, StyledLink, StyledAc
 import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks/hooks';
-import { ShoppingCart, Logout } from '@mui/icons-material';
 import { logout } from '../../redux/slices/userSlice';
-import { emptyCartAsync } from '../../redux/slices/cartSlice';
+import { emptyCart, emptyCartAsync } from '../../redux/slices/cartSlice';
 
 const Navbar = () => {
 
@@ -22,7 +21,7 @@ const Navbar = () => {
     }
 
     const handleLogout = () => {
-        dispatch(emptyCartAsync({ currentUser }));
+        dispatch(emptyCart());
         dispatch(logout());
         navigate('/signin');
     }
@@ -41,7 +40,7 @@ const Navbar = () => {
                                     </Badge>
                                 </IconButton>
                             )}
-                            <IconButton onClick={() => handleLogout()} aria-label='Logout' color='inherit' >
+                            <IconButton onClick={() => handleLogout()} aria-label='Logout' color='inherit'  >
                                 <StyledLogout />
                             </IconButton>
                         </StyledActions>

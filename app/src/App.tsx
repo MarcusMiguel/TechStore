@@ -33,7 +33,6 @@ const App: FC = () => {
         <Route path="/signin" element={currentUser ? <Navigate to="/" /> : <SignIn />} />
         <Route path="/signup" element={currentUser ? <Navigate to="/" /> : <SignUp />} />
       </Routes>
-      <Footer />
     </Router>
   )
 };

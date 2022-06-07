@@ -1,26 +1,25 @@
 import { StyledContainer, StyledImg } from "./style";
 import logo from '../../assets/logo.png';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Card, CardMedia, CardContent, Modal, Box, Typography, Grid, IconButton, Container, Link } from '@mui/material';
-import { StyledCartActions, StyledCartContainer, StyledCartTitle, StyledCartTitleTypography, StyledGridColumn, StyledGridColumnsContainer, StyledGridImg, StyledGridPrice, StyledGridRowsContainer, } from './style';
+import { Card, CardMedia, CardContent, Modal, Box, Grid, IconButton, Container, Link } from '@mui/material';
+import {StyledFooterLinks,StyledFooterCol, StyledCartActions, StyledCartContainer, StyledCartTitle, StyledCartTitleTypography, StyledGridColumn, StyledGridColumnsContainer, StyledGridImg, StyledGridPrice, StyledGridRowsContainer, } from './style';
 
 export default function Footer() {
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     return (
-            <StyledGridColumnsContainer container >
-            <Grid item xs={1} style={{}}>
-            </Grid>
-                <Grid item xs={4} style={{}}>
-                <StyledImg onClick={() => navigate('/')} src={logo} alt='ecommerce'/>
-                <span style={{paddingTop: "20px"}}> Ecommerce</span>
-                </Grid>
-                <StyledGridColumn item xs={2} ><Link>About</Link></StyledGridColumn>
-                <StyledGridColumn item xs={2} ><Link>Contact</Link></StyledGridColumn>
-                <StyledGridColumn item xs={2} ><Link>Terms of Service</Link></StyledGridColumn>
-                <Grid item xs={1} style={{}}>
-            </Grid>
-            </StyledGridColumnsContainer>
+            <StyledContainer>
+                <StyledFooterCol>
+                     <StyledImg onClick={() => navigate('/')} src={logo} alt='ecommerce'/>
+                     TechStore™
+                </StyledFooterCol>
+                <StyledFooterLinks>
+                    <Link>About</Link>
+                    <Link>Contact</Link>
+                    <Link>Terms of Service</Link>
+                </StyledFooterLinks>
+                </StyledContainer>
     )
 }

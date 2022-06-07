@@ -3,37 +3,33 @@ import { Box } from '@mui/material';
 
 export const StyledMain = styled.div`
     display: flex;
-    justify-content: center;
-    padding-right: 3vw;
-    padding-left: 3vw;
+    flex-direction: column;
     width: 100%
     @media(max-width: 950px) {
         margin-top: 80px;
     }
-
 `;
 
 export const StyledBox = styled(Box)`
-
-    padding-left: 20px ;
-    padding-right: 20px; 
+    padding-right: 70px;
+    padding-left: 70px;
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
 
     @media(max-width: 299px) {
-        padding: 0 !important;
-        grid-template-columns: repeat(1, 1fr) !important;
+        padding: 0;
+        grid-template-columns: repeat(1, 1fr);
     }
 
     @media(min-width: 300px) and (max-width: 599px) {
-        grid-template-columns: repeat(1, 1fr) !important;
-        width: 80% !important;
-        max-width: 400px !important;
+        justify-self: center !important;
+        grid-template-columns: repeat(1, 1fr);
     }
 
     @media(min-width: 600px) and (max-width: 1100px){
-        grid-template-columns: repeat(2, 1fr) !important;
+        grid-template-columns: repeat(2, 1fr);
     }
 
 `;

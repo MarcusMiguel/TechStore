@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { ProductCard } from './ProductCard/ProductCard';
 import { StyledMain, StyledBox } from './style';
 import { useAppSelector } from '../../redux/hooks/hooks';
+import Footer from '../Footer/Footer';
 
 const ProductList = () => {
 
@@ -22,11 +23,11 @@ const ProductList = () => {
                             <ProductCard product={product}
                                 key={product._id}>
                             </ProductCard>
-
                             : <></>
                     ))
                 }
             </StyledBox>
+            <Footer />
         </StyledMain >
     )
 };

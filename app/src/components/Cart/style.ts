@@ -1,77 +1,68 @@
 import styled from 'styled-components';
-import { Card, CardMedia, CardContent, Modal, Box, Typography, Grid, IconButton, Container } from '@mui/material';
-
-export const StyledGridImg = styled(Grid)`
-    @media(max-width: 825px) {
-        display: none;
-    }
-`;
+import { IconButton, TableCell } from '@mui/material';
+import { ProductionQuantityLimitsSharp } from '@mui/icons-material';
 
 export const StyledCartActions = styled.div`
     display: flex;
-    justifyItems: center;
-    width: 40%;
-    paddingLeft 30%;
-    paddingRight: 30%;
-
-    @media(max-width: 825px) {
-        padding-left: 6vw;
-    }
+    justify-content: center;
+    margin-top: 2vh;
 `;
 
 export const StyledCartContainer = styled.div`
     padding: 0px;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const StyledCartTitle = styled.div`
     display: flex;
     align-items: center;
-    height: 12vh;
-    padding-left: 3vw;
-
-    @media(max-width: 825px) {
-        padding-left: 6vw;
-    }
-`;
-
-export const StyledGridColumnsContainer = styled(Grid)`
-    flex-direction: row;
-    display: flex;
-    
-    @media(max-width: 825px) {
-        display: none;
-    }
-`;
-
-export const StyledGridPrice = styled(Grid)`
-    @media(max-width: 825px) {
-        display: none;
-    }
-`;
-
-export const StyledGridColumn = styled(Grid)`
-    font-size: 20;
-    font-weight: 500;
-    @media(max-width: 825px) {
-        display: none;
-    }
-`;
-
-export const StyledCartTitleTypography = styled(Typography)`
-    width: 100%;
-    font-size: 30px;
+    height: 4vh;
+    font-size: 22px;
     font-weight: 900;
-    margin-bottom: 1; 
     @media(max-width: 825px) {
-        padding-left: 7vw;
-    
     }
 `;
 
-export const StyledGridRowsContainer = styled(Grid)`
-    padding: 30px 20px 0px 20px;
-    @media(max-width: 825px) {
-        padding-left: 8vw;
+export const StyledEmptyCart = styled(ProductionQuantityLimitsSharp)`
+    font-size: 4vh !important;
+`;
+
+export const StyledCartWithItems = styled.div`
+    min-height: 57vh;
+    padding-left: 70px;
+    padding-right: 70px;
+`;
+
+export const StyledCheckoutButton = styled(IconButton)`
+    font-size: 0.875rem !important;
+    border-radius: 0 !important;
+    @media(max-width: 600px) and (min-width: 300px) {
+        font-size: 16px !important;
+    }
+    @media(max-width: 300px) {
+        font-size: 14px !important;
+    }
+`;
+
+export const StyledEmptyCartButton = styled(IconButton)`
+    font-size: 0.875rem !important;
+    border-radius:  !important;
+    @media(max-width: 600px) and (min-width: 300px) {
+        font-size: 16px !important;
+    }
+    @media(max-width: 300px) {
+        font-size: 14px !important;
+    }
+`;
+
+export const StyledQuantityActions = styled.div`
+    display: flex  !important;
+    flex-direction: row  !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    @media(max-width: 600px) and (min-width: 300px) {
+        flex-direction: column  !important;
     }
 `;

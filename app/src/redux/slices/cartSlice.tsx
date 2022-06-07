@@ -139,8 +139,11 @@ const cartSlice = createSlice({
                 let index = state.cart.products.findIndex(x => x._id == action.payload?._id);
                 if (index != -1) {
                     state.cart.products[index].quantity -= 1;
-                    if (state.cart.products[index].quantity == 0) {
-                        state.cart.products.splice(index);
+                    if (state.cart.products[index].quantity <= 0) {
+                        console.log("removing")
+                        console.log(state.cart.products)
+                        state.cart.products = state.cart.products.filter(x => x != state.cart?.products[index]);
+                        console.log(state.cart.products)
                     }
                     state.cart.total -= action.payload?.price ? action.payload.price * 100 : 0;
                 }
