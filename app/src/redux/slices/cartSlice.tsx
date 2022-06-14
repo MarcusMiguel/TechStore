@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { RootState } from "..";
-import { useAppSelector } from "../hooks/hooks";
 
 interface Item {
     _id: string,
@@ -61,7 +60,7 @@ export const addProductAsync = createAsyncThunk('addProductAsync', async (data: 
 
         const state = thunkAPI.getState() as RootState;
 
-        const res = await axios.put(
+        await axios.put(
             "http://localhost:5000/api/cart/",
             { _id: data.currentUser?._id, userId: data.currentUser?._id, products: state.cart.cart?.products, total: state.cart.cart?.total }, { headers: { "token": `Bearer ${data.currentUser?.accessToken}` } });
 
@@ -74,7 +73,7 @@ export const removeProductAsync = createAsyncThunk('removeProductAsync', async (
 
         const state = thunkAPI.getState() as RootState;
 
-        const res = await axios.put(
+        await axios.put(
             "http://localhost:5000/api/cart/",
             { _id: data.currentUser?._id, userId: data.currentUser?._id, products: state.cart.cart?.products, total: state.cart.cart?.total }, { headers: { "token": `Bearer ${data.currentUser?.accessToken}` } });
     } catch (err) { }
@@ -84,9 +83,7 @@ export const emptyCartAsync = createAsyncThunk('emptyCartAsync', async (data: em
     try {
         thunkAPI.dispatch(emptyCart());
 
-        const state = thunkAPI.getState() as RootState;
-
-        const res = await axios.put(
+        await axios.put(
             "http://localhost:5000/api/cart/",
             { _id: data.currentUser?._id, userId: data.currentUser?._id, products: [], total: 0 }, { headers: { "token": `Bearer ${data.currentUser?.accessToken}` } });
     } catch (err) { }
@@ -101,7 +98,7 @@ export const loadCart = createAsyncThunk('loadCart', async (data: loadCartData, 
         const state = thunkAPI.getState() as RootState;
 
         if (cart.data == null) {
-            const res = await axios.post(
+            await axios.post(
                 "http://localhost:5000/api/cart/", {
                 _id: data.currentUser?._id,
                 userId: data.currentUser?._id,
@@ -124,8 +121,8 @@ const cartSlice = createSlice({
         },
         addProduct: (state, action: PayloadAction<Product | undefined>) => {
             if (state.cart != null && action.payload != null) {
-                let index = state.cart.products.findIndex(x => x._id == action.payload?._id);
-                if (index != -1) {
+                let index = state.cart.products.findIndex(x => x._id === action.payload?._id);
+                if (index !== -1) {
                     state.cart.products[index].quantity += 1;
                 }
                 else {
@@ -135,14 +132,14 @@ const cartSlice = createSlice({
             }
         },
         removeProduct: (state, action: PayloadAction<Product | undefined>) => {
-            if (state.cart != null) {
-                let index = state.cart.products.findIndex(x => x._id == action.payload?._id);
-                if (index != -1) {
+            if (state.cart !== null) {
+                let index = state.cart.products.findIndex(x => x._id === action.payload?._id);
+                if (index !== -1) {
                     state.cart.products[index].quantity -= 1;
                     if (state.cart.products[index].quantity <= 0) {
                         console.log("removing")
                         console.log(state.cart.products)
-                        state.cart.products = state.cart.products.filter(x => x != state.cart?.products[index]);
+                        state.cart.products = state.cart.products.filter(x => x !== state.cart?.products[index]);
                         console.log(state.cart.products)
                     }
                     state.cart.total -= action.payload?.price ? action.payload.price * 100 : 0;
@@ -150,7 +147,7 @@ const cartSlice = createSlice({
             }
         },
         emptyCart: (state) => {
-            if (state.cart != null) {
+            if (state.cart !== null) {
                 state.cart.products = [];
                 state.cart.total = 0;
             }
