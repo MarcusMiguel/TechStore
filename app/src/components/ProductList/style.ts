@@ -1,30 +1,12 @@
 import styled from 'styled-components';
-import { Box } from '@mui/material';
 
-export const StyledMain = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%
-    @media(max-width: 950px) {
-        margin-top: 80px;
-    }
-`;
-
-export const StyledBox = styled(Box)`
-    padding-right: 70px;
-    padding-left: 70px;
+export const ProductListContainer = styled.div`
+    padding: 4em 8vw 4em 8vw;
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
 
-    @media(max-width: 299px) {
-        padding: 0;
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    @media(min-width: 300px) and (max-width: 599px) {
-        justify-self: center !important;
+    @media(max-width: 599px) {
         grid-template-columns: repeat(1, 1fr);
     }
 

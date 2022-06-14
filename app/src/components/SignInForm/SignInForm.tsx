@@ -1,6 +1,4 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
@@ -81,7 +79,7 @@ const SignInForm = () => {
             onChange={handleChange}
           />
           <Button onClick={handleClick} disabled={fetching} >
-            LOGIN
+            SIGN IN
           </Button>
           <Link onClick={() => navigate('/signup')}>SIGN UP</Link>
         </Form>

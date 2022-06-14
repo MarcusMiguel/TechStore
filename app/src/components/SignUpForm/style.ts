@@ -10,14 +10,16 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-width: 25vw;
-  padding: 20px;
-  background-color: white;
+width: 12em;
+padding: 20px;
+background-color: white;
+margin-bottom: 10vh;
 `;
 
 export const Title = styled.h1`
   font-size: 24px;
   font-weight: 300;
+  text-align: center;
 `;
 
 export const Form = styled.form`
@@ -37,22 +39,27 @@ export const Agreement = styled.span`
 `;
 
 export const Button = styled.button`
-  width: 40%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-  margin-top: 2vh;
-  `;
+width: 50%;
+height: 2em;
+padding: 15px 20px;
+background: rgb(84,121,9);
+background: linear-gradient(90deg, rgba(84,121,9,0.27) 0%, rgba(84,121,9,0.49) 100%); 
+border-radius: 100px;
+color: black;
+cursor: pointer;
+margin-top: .3em;
+display: flex;
+align-items: center;
+font-size: .8rem;
+`;
 
 export const Link = styled.div`
-  font-size: 20px;
+  font-size: .8rem;
   text-decoration: underline;
   cursor: pointer;
   width: 100%;
-  margin-left: 80%;
-  margin-top: 10px;
+  text-align: end;
+  padding: 0 10px;
 `;
 
 export const Error = styled.span`

@@ -8,3 +8,5 @@ export const StyledCartPage = styled.div`
         padding: 0
     }
 `;
+
+

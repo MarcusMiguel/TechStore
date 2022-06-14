@@ -4,10 +4,16 @@ import { StyledCartPage } from './style';
 
 const CartPage = () => {
     return (
-        <StyledCartPage>
-            <Cart />
-        </StyledCartPage>
+        <>
+            <StyledCartPage>
+                <Cart />
+            </StyledCartPage>
+            <Footer />
+        </>
+
     );
 };
+
+
 
 export default CartPage;

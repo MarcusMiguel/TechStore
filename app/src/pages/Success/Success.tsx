@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { useNavigate } from 'react-router-dom';
 import { emptyCartAsync } from "../../redux/slices/cartSlice";
+import { GoHomeButton, SuccessMessage } from "./style";
 
 interface CurrentLocationState {
     state: {
@@ -39,19 +38,10 @@ const Success = () => {
     }, [state, currentUser]);
 
     return (
-        <div
-            style={{
-                height: "100vh",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-            }}
-        >
-            {
-                `Successfull. Your order is being prepared...`}
-            <button onClick={() => navigate('/')} style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
-        </div>
+        <SuccessMessage>
+            {`Success! Your order is being prepared.`}
+            <GoHomeButton onClick={() => navigate('/')} >Go Home</GoHomeButton>
+        </SuccessMessage>
     );
 };
 

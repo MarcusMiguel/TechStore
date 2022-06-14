@@ -1,12 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: Open-Sans, Helvetica, Sans-Serif;
-    margin: 0;
-    width: 100% !important;
+
+  *{
+    box-sizing: border-box;
+    font-family: sans-serif;
   }
 
+  body {
+    margin: 0;
+    width:  100%;
+  }
+  
 `;
 
 export default GlobalStyle;

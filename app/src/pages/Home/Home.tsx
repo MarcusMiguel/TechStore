@@ -3,7 +3,10 @@ import Footer from '../../components/Footer/Footer';
 
 const Home = () => {
     return (
-        <ProductList />
+        <>
+            <ProductList />
+            <Footer />
+        </>
     );
 };
 

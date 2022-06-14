@@ -1,10 +1,6 @@
-import React, { useState } from 'react';
-import { useSelector } from "react-redux";
-
-import { ProductCard } from './ProductCard/ProductCard';
-import { StyledMain, StyledBox } from './style';
+import { ProductListContainer } from './style';
 import { useAppSelector } from '../../redux/hooks/hooks';
-import Footer from '../Footer/Footer';
+import { ProductCard } from '../ProductCard/ProductCard';
 
 const ProductList = () => {
 
@@ -15,21 +11,19 @@ const ProductList = () => {
     }
 
     return (
-        <StyledMain >
-            <StyledBox>
-                {
-                    products?.map((product, index) => (
-                        product ?
-                            <ProductCard product={product}
-                                key={product._id}>
-                            </ProductCard>
-                            : <></>
-                    ))
-                }
-            </StyledBox>
-            <Footer />
-        </StyledMain >
+        <ProductListContainer>
+            {
+                products?.map((product, index) => (
+                    product ?
+                        <ProductCard product={product}
+                            key={product._id}>
+                        </ProductCard>
+                        : <></>
+                ))
+            }
+        </ProductListContainer>
     )
+
 };
 
 export default ProductList;
